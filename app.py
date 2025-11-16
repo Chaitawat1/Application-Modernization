@@ -40,10 +40,10 @@ header[data-testid="stHeader"] {
     padding-top: 10px !important; 
 }
      
-    .main-title { text-align: center; font-size: 34px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
+    .main-title { text-align: center; font-size: 36px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
     .main-subtitle { text-align: center; font-size: 18px; color: #666; margin-bottom: 20px; }
     .stTabs [data-baseweb="tab-list"] {
-        max-width: 700px; 
+        max-width: 1000px; 
         margin: auto;
     }
 
@@ -57,8 +57,10 @@ header[data-testid="stHeader"] {
     .info-card { 
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
         padding: 5px; border-radius: 13px; color: white; text-align: center; margin-bottom: 10px; 
+        width: 600px; margin: 0 auto;
+        
     }
-    .info-card h2 { margin: 0; font-size: 40px; font-weight: 700; }
+    .info-card h2 { margin: 0; font-size: 36px; font-weight: 600; }
 
     /* CSS สำหรับ Card รายละเอียด Phase (category-card) */
     .category-card {
@@ -102,7 +104,7 @@ col_center = st.columns([1, 2, 1])[1]
 with col_center:
     st.markdown("""
     <div class="info-card">
-        <h2>349 Application </h2> 
+        <h2> 349 Application </h2> 
     </div>
     """,
                 unsafe_allow_html=True)
