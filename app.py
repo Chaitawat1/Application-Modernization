@@ -2,19 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-# ***************************************************************
-# 1. การตั้งค่าหน้าเพจหลัก (ใช้สำหรับ Dashboard)
-# ***************************************************************
 st.set_page_config(page_title="Application Modernization Dashboard",
                    page_icon="📊",
                    layout="wide")
-
-# ***************************************************************
-# 2. CSS Styles (รวม CSS จากทั้งสองชุดโค้ด)
-# ***************************************************************
 st.markdown("""
 <style>
-
 
 .st-emotion-cache-1jmveez, .st-emotion-cache-z5xscj, .block-container { 
     padding-top: 0rem !important; /* ล้าง Padding ด้านบน */
@@ -125,7 +117,7 @@ with tab1:
     st.markdown("""
     <div class="overview-section">
         <div class="overview-title">Phase 1: 2569-2570</div>
-        <div class="overview-subtitle">รวม 349 แอปพลิเคชัน</div>
+        <div class="overview-subtitle"> การประเมินแอปพลิเคชันทั้งหมด 349 รายการ เพื่อจัดกลุ่มตามแนวทาง 7R Modernization ได้ผลลัพธ์ดังนี้ </div>
     </div>
     """,
                 unsafe_allow_html=True)
@@ -266,7 +258,9 @@ with tab1:
     st.divider()
     st.markdown("#### 📋 ตารางสรุปข้อมูล Phase 1")
     df_display_p1 = df_phase1.copy()
-    df_display_p1['เปอร์เซ็นต์'] = [f"{x}%" for x in df_display_p1['เปอร์เซ็นต์']]
+    df_display_p1['เปอร์เซ็นต์'] = [
+        f"{x}%" for x in df_display_p1['เปอร์เซ็นต์']
+    ]
     st.dataframe(df_display_p1,
                  use_container_width=True,
                  hide_index=True,
@@ -291,7 +285,7 @@ with tab2:
     st.markdown("""
     <div class="overview-section">
         <div class="overview-title">Phase 2: 2570-2571</div>
-        <div class="overview-subtitle">รวม 114 แอปพลิเคชัน (จาก 349)</div>
+        <div class="overview-subtitle">การดำเนินการ Modernization แอปพลิเคชัน 114 รายการ ที่ถูกคัดเลือกจากกลุ่ม Retain และกลุ่มที่ต้องปรับปรุงเพิ่มเติมตามผลประเมินใน Phase 1 </div>
     </div>
     """,
                 unsafe_allow_html=True)
@@ -441,7 +435,9 @@ with tab2:
     st.divider()
     st.markdown("#### 📋 ตารางสรุปข้อมูล Phase 2")
     df_display_p2 = df_phase2.copy()
-    df_display_p2['เปอร์เซ็นต์'] = [f"{x}%" for x in df_display_p2['เปอร์เซ็นต์']]
+    df_display_p2['เปอร์เซ็นต์'] = [
+        f"{x}%" for x in df_display_p2['เปอร์เซ็นต์']
+    ]
     st.dataframe(df_display_p2,
                  use_container_width=True,
                  hide_index=True,
@@ -456,10 +452,6 @@ with tab2:
                      "คำอธิบาย":
                      st.column_config.TextColumn("คำอธิบาย", width="large")
                  })
-
-    st.info(
-        f"**รวมทั้งหมด Phase 2: {df_phase2['จำนวน'].sum()} Applications ({round(df_phase2['เปอร์เซ็นต์'].sum(), 2)}% จากทั้งหมด 349)**"
-    )
 
     st.markdown("""
     ### 📌 สรุปข้อมูล Phase 2
