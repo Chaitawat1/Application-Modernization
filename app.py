@@ -133,7 +133,7 @@ with tab1:
     phase1_data = [{
         'category': 'Retain',
         'icon': '⭕',
-        'subtitle': 'คงระบบเดิมไว้',
+        'subtitle': 'คงระบบไว้ที่เดิม',
         'count': 184,
         'percentage': 52.72,
         'description':
@@ -142,7 +142,7 @@ with tab1:
     }, {
         'category': 'Rehost',
         'icon': '🔄',
-        'subtitle': 'Lift & Shift ',
+        'subtitle': 'Lift & Shift',
         'count': 123,
         'percentage': 35.24,
         'description':
@@ -266,8 +266,7 @@ with tab1:
     st.divider()
     st.markdown("#### 📋 ตารางสรุปข้อมูล Phase 1")
     df_display_p1 = df_phase1.copy()
-    df_display_p1['เปอร์เซ็นต์'] = df_display_p1['เปอร์เซ็นต์'].apply(
-        lambda x: f"{x}%")
+    df_display_p1['เปอร์เซ็นต์'] = [f"{x}%" for x in df_display_p1['เปอร์เซ็นต์']]
     st.dataframe(df_display_p1,
                  use_container_width=True,
                  hide_index=True,
@@ -349,7 +348,7 @@ with tab2:
         'count': 1,
         'percentage': 0.29,
         'description':
-        'การออกแบบและพัฒนาปรับปรุงสถาปัตยกรรมของระบบงานใหม่ ให้เป็นรูปแบบ (Cloud-Native) ',
+        'การออกแบบและพัฒนาปรับปรุงสถาปัตยกรรมระบบงานใหม่ ให้เป็นรูปแบบ (Cloud-Native) ',
         'color': '#D9C8F4'
     }]
 
@@ -442,8 +441,7 @@ with tab2:
     st.divider()
     st.markdown("#### 📋 ตารางสรุปข้อมูล Phase 2")
     df_display_p2 = df_phase2.copy()
-    df_display_p2['เปอร์เซ็นต์'] = df_display_p2['เปอร์เซ็นต์'].apply(
-        lambda x: f"{x}%")
+    df_display_p2['เปอร์เซ็นต์'] = [f"{x}%" for x in df_display_p2['เปอร์เซ็นต์']]
     st.dataframe(df_display_p2,
                  use_container_width=True,
                  hide_index=True,
