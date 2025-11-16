@@ -40,7 +40,7 @@ header[data-testid="stHeader"] {
     padding-top: 10px !important; 
 }
      
-    .main-title { text-align: center; font-size: 36px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+    .main-title { text-align: center; font-size: 34px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
     .main-subtitle { text-align: center; font-size: 18px; color: #666; margin-bottom: 20px; }
     .stTabs [data-baseweb="tab-list"] {
         max-width: 700px; 
