@@ -100,7 +100,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("""
     <div class="phase-card" style="border-left-color: #90C9A5;">
-        <div class="phase-title">📈 Phase 1: 2568-2570</div>
+        <div class="phase-title">📈 Phase 1: 2569-2570</div>
         <div class="phase-subtitle">การดำเนินการทุกระบบ</div>
         <div class="phase-stats">349 แอปพลิเคชัน</div>
         <div class="category-list">
