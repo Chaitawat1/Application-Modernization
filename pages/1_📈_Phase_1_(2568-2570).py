@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Phase 1 (2568-2570)",
+st.set_page_config(page_title="Phase 1 (2569-2570)",
                    page_icon="📈",
                    layout="wide")
 
@@ -75,7 +75,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="overview-section">
-    <div class="overview-title">Phase 1: 2568-2570</div>
+    <div class="overview-title">Phase 1: 2569-2570</div>
     <div class="overview-subtitle">รวม 349 แอปพลิเคชัน</div>
 </div>
 """,
