@@ -2,12 +2,24 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
+# ***************************************************************
+# 0. กำหนดค่าคงที่รวม (เพื่อให้การคำนวณถูกต้อง)
+# ***************************************************************
+TOTAL_APPS = 349
+
+# ***************************************************************
+# 1. การตั้งค่าหน้าเพจหลัก (ใช้สำหรับ Dashboard)
+# ***************************************************************
 st.set_page_config(page_title="Application Modernization Dashboard",
                    page_icon="📊",
                    layout="wide")
+
+# ***************************************************************
+# 2. CSS Styles (ไม่ได้แก้ไข)
+# ***************************************************************
 st.markdown("""
 <style>
-
+/* CSS styles as provided in the original code... */
 .st-emotion-cache-1jmveez, .st-emotion-cache-z5xscj, .block-container { 
     padding-top: 0rem !important; /* ล้าง Padding ด้านบน */
     margin-top: 0rem !important;  /* ล้าง Margin ด้านบน */
@@ -31,7 +43,7 @@ header[data-testid="stHeader"] {
     margin-top: 0px !important; 
     padding-top: 10px !important; 
 }
-     
+
     .main-title { text-align: center; font-size: 36px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
     .main-subtitle { text-align: center; font-size: 18px; color: #666; margin-bottom: 20px; }
     .stTabs [data-baseweb="tab-list"] {
@@ -50,7 +62,7 @@ header[data-testid="stHeader"] {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
         padding: 5px; border-radius: 13px; color: white; text-align: center; margin-bottom: 10px; 
         width: 600px; margin: 0 auto;
-        
+
     }
     .info-card h2 { margin: 0; font-size: 36px; font-weight: 600; }
 
@@ -78,7 +90,7 @@ header[data-testid="stHeader"] {
         padding-top: 5px !important;
         padding-bottom: 5px !important;
     }
-    
+
 </style>
 """,
             unsafe_allow_html=True)
@@ -94,9 +106,9 @@ st.markdown("""
 # Card 349 อยู่ตรงกลาง
 col_center = st.columns([1, 2, 1])[1]
 with col_center:
-    st.markdown("""
+    st.markdown(f"""
     <div class="info-card">
-        <h2> 349 Application </h2> 
+        <h2> {TOTAL_APPS} Application </h2> 
     </div>
     """,
                 unsafe_allow_html=True)
@@ -112,8 +124,6 @@ tab1, tab2 = st.tabs(["📈 Phase 1: 2569-2570", "📊 Phase 2: 2570-2571"])
 # TAB 1: เนื้อหา Phase 1
 # ===============================================================
 with tab1:
-    # นำเข้าโค้ด Phase 1 (จากโค้ดที่คุณให้มาก่อนหน้า)
-
     st.markdown("""
     <div class="overview-section">
         <div class="overview-title">Phase 1: 2569-2570</div>
@@ -122,12 +132,12 @@ with tab1:
     """,
                 unsafe_allow_html=True)
 
-    phase1_data = [{
+    # *** ข้อมูล Phase 1 (ลบ 'percentage' ออก) ***
+    phase1_data_raw = [{
         'category': 'Retain',
         'icon': '⭕',
         'subtitle': 'คงระบบไว้ที่เดิม',
-        'count': 184,
-        'percentage': 52.72,
+        'count': 186,
         'description':
         'การคงระบบงานในสภาพแวดล้อมเดิม เนื่องจากยังไม่เหมาะสมต่อการย้าย อาจเป็นเหตุผลด้านความมั่นคงปลอดภัย หรือข้อจำกัดเชิงเทคนิค',
         'color': '#A8C5E4'
@@ -136,7 +146,6 @@ with tab1:
         'icon': '🔄',
         'subtitle': 'Lift & Shift',
         'count': 123,
-        'percentage': 35.24,
         'description':
         'การย้ายระบบงานหรือข้อมูลขึ้นสู่ระบบคลาวด์โดยไม่มีการแก้ไขระบบงาน (Lift & Shift) และคงสถาปัตยกรรมเดิมไว้',
         'color': '#90C9A5'
@@ -144,8 +153,7 @@ with tab1:
         'category': 'Retire',
         'icon': '🗑️',
         'subtitle': 'ยกเลิก/ยุติระบบที่ไม่จำเป็น',
-        'count': 22,
-        'percentage': 6.3,
+        'count': 20,
         'description':
         'การยุติหรือยกเลิกระบบงานที่หมดความจำเป็น ลดความซ้ำซ้อน และลดภาระค่าใช้จ่ายในการดูแลระบบ ',
         'color': '#C5A8E4'
@@ -154,7 +162,6 @@ with tab1:
         'icon': '⚙️',
         'subtitle': 'Tinker & Shift',
         'count': 11,
-        'percentage': 3.15,
         'description':
         'การย้ายแอปพลิเคชันไปยัง Cloud พร้อมกับการปรับปรุงบางส่วน เพื่อใช้ประโยชน์จากบริการจัดการของ Cloud (Managed Services)',
         'color': '#8DD9D9'
@@ -163,12 +170,23 @@ with tab1:
         'icon': '🛒',
         'subtitle': 'ใช้ SaaS หรือ COTS แทนระบบเดิม',
         'count': 9,
-        'percentage': 2.58,
         'description':
         'การเลิกใช้ระบบงานเดิมและเปลี่ยนไปใช้บริการซอฟต์แวร์สำเร็จรูป หรือ บริการรูปแบบซอฟต์แวร์เป็นบริการ (SaaS) แทน',
         'color': '#F4A7B9'
     }]
 
+    # *** การคำนวณเปอร์เซ็นต์แบบพลวัตสำหรับ Phase 1 ***
+    phase1_data = []
+    for item in phase1_data_raw:
+        # คำนวณเปอร์เซ็นต์ใหม่ (เทียบกับ TOTAL_APPS = 349)
+        percentage = (item['count'] / TOTAL_APPS) * 100
+        item['percentage'] = round(percentage, 2)
+        phase1_data.append(item)
+
+    # ตรวจสอบยอดรวมของ Phase 1
+    sum_phase1_counts = sum(item['count'] for item in phase1_data)
+
+    # แสดงผล Card (ใช้ phase1_data ที่คำนวณแล้ว)
     row1_cols_p1 = st.columns(3)
     for idx, item in enumerate(phase1_data[:3]):
         with row1_cols_p1[idx]:
@@ -179,7 +197,7 @@ with tab1:
                         <div class="card-title">{item['icon']} {item['category']}</div>
                         <div class="card-subtitle">{item['subtitle']}</div>
                     </div>
-                    <div class="card-percentage">{item['percentage']}%</div>
+                    <div class="card-percentage">{item['percentage']:.2f}%</div>
                 </div>
                 <div class="card-number">{item['count']}</div>
                 <div class="card-description">{item['description']}</div>
@@ -197,7 +215,7 @@ with tab1:
                         <div class="card-title">{item['icon']} {item['category']}</div>
                         <div class="card-subtitle">{item['subtitle']}</div>
                     </div>
-                    <div class="card-percentage">{item['percentage']}%</div>
+                    <div class="card-percentage">{item['percentage']:.2f}%</div>
                 </div>
                 <div class="card-number">{item['count']}</div>
                 <div class="card-description">{item['description']}</div>
@@ -238,15 +256,16 @@ with tab1:
     with col_chart2_p1:
         st.markdown("#### จำนวน Applications ตาม Category")
         fig_bar_p1 = go.Figure(data=[
-            go.Bar(x=[item['category'] for item in phase1_data],
-                   y=[item['count'] for item in phase1_data],
-                   text=[
-                       f"{item['count']}<br>({item['percentage']}%)"
-                       for item in phase1_data
-                   ],
-                   textposition='outside',
-                   marker=dict(color=colors_p1),
-                   hovertemplate='<b>%{x}</b><br>จำนวน: %{y}<extra></extra>')
+            go.Bar(
+                x=[item['category'] for item in phase1_data],
+                y=[item['count'] for item in phase1_data],
+                text=[
+                    f"{item['count']}<br>({item['percentage']:.2f}%)"  # แก้ไขการแสดงผลเป็น .2f
+                    for item in phase1_data
+                ],
+                textposition='outside',
+                marker=dict(color=colors_p1),
+                hovertemplate='<b>%{x}</b><br>จำนวน: %{y}<extra></extra>')
         ])
         fig_bar_p1.update_layout(height=400,
                                  xaxis_title="",
@@ -258,44 +277,52 @@ with tab1:
     st.divider()
     st.markdown("#### 📋 ตารางสรุปข้อมูล Phase 1")
     df_display_p1 = df_phase1.copy()
+    # ใช้ค่า percentage ที่คำนวณใหม่
     df_display_p1['เปอร์เซ็นต์'] = [
-        f"{x}%" for x in df_display_p1['เปอร์เซ็นต์']
+        f"{x:.2f}%" for x in df_display_p1['เปอร์เซ็นต์']
     ]
-    st.dataframe(df_display_p1,
-                 use_container_width=True,
-                 hide_index=True,
-                 column_config={
-                     "Category":
-                     st.column_config.TextColumn("Category", width="small"),
-                     "จำนวน":
-                     st.column_config.NumberColumn("จำนวน", width="small"),
-                     "เปอร์เซ็นต์":
-                     st.column_config.TextColumn("เปอร์เซ็นต์", width="small"),
-                     "คำอธิบาย":
-                     st.column_config.TextColumn("คำอธิบาย", width="large")
-                 })
+    st.dataframe(
+        df_display_p1,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Category":
+            st.column_config.TextColumn("Category", width="small"),
+            "จำนวน":
+            st.column_config.NumberColumn("จำนวน", width="small"),
+            "เปอร์เซ็นต์":
+            st.column_config.TextColumn("เปอร์เซ็นต์ (จาก 349)",
+                                        width="small"),  # ปรับชื่อ
+            "คำอธิบาย":
+            st.column_config.TextColumn("คำอธิบาย", width="large")
+        })
+    # ใช้ยอดรวมที่คำนวณได้
     st.info(
-        f"**รวมทั้งหมด Phase 1: {df_phase1['จำนวน'].sum()} Applications (100%)**"
+        f"**รวมทั้งหมด Phase 1: {sum_phase1_counts} Applications (~{round(sum_phase1_counts / TOTAL_APPS * 100, 2)}%)**"
     )
+    # เนื่องจาก Phase 1 มีรวม 349 แอปพอดี จึงแสดง 100%
 
 # ===============================================================
-# TAB 2: เนื้อหา Phase 2 (โค้ดที่คุณให้มาล่าสุด)
+# TAB 2: เนื้อหา Phase 2
 # ===============================================================
 with tab2:
     st.markdown("""
     <div class="overview-section">
         <div class="overview-title">Phase 2: 2570-2571</div>
-        <div class="overview-subtitle">การดำเนินการ Modernization แอปพลิเคชัน 114 รายการ ที่ถูกคัดเลือกจากกลุ่ม Retain และกลุ่มที่ต้องปรับปรุงเพิ่มเติมตามผลประเมินใน Phase 1 </div>
+        <div class="overview-subtitle">การดำเนินการ Modernization แอปพลิเคชัน 116 รายการ ที่ถูกคัดเลือกจากกลุ่ม Retain และกลุ่มที่ต้องปรับปรุงเพิ่มเติมตามผลประเมินใน Phase 1 </div>
     </div>
     """,
                 unsafe_allow_html=True)
 
-    phase2_data = [{
+    # กำหนด Total Apps สำหรับ Phase 2 (ตามที่ระบุในคำอธิบาย: 116 รายการ)
+    TOTAL_APPS_PHASE2 = 116
+
+    # *** ข้อมูล Phase 2 (ลบ 'percentage' ออก) ***
+    phase2_data_raw = [{
         'category': 'Refactor',
         'icon': '⚙️',
         'subtitle': 'การปรับปรุงโค้ด',
-        'count': 54,
-        'percentage': 15.47,
+        'count': 52,
         'description':
         'การปรับปรุงโค้ดเพื่อเพิ่มประสิทธิภาพและความยืดหยุ่นของระบบ โดยไม่เปลี่ยนแปลงฟังก์ชันการทำงานหลัก',
         'color': '#A8D5E4'
@@ -303,8 +330,7 @@ with tab2:
         'category': 'Retire',
         'icon': '🗑️',
         'subtitle': 'ยกเลิก/ยุติระบบที่ไม่จำเป็น',
-        'count': 38,
-        'percentage': 10.89,
+        'count': 39,
         'description':
         'การยุติหรือยกเลิกระบบงานที่หมดความจำเป็น ลดความซ้ำซ้อน และลดภาระค่าใช้จ่ายในการดูแลระบบ',
         'color': '#E4B5D1'
@@ -312,8 +338,7 @@ with tab2:
         'category': 'Rehost',
         'icon': '🔄',
         'subtitle': 'Lift & Shift',
-        'count': 15,
-        'percentage': 4.30,
+        'count': 16,
         'description':
         'การย้ายระบบงานหรือข้อมูลขึ้นสู่ระบบคลาวด์โดยไม่มีการแก้ไขระบบงาน (Lift & Shift) และคงสถาปัตยกรรมเดิมไว้',
         'color': '#B5E4C5'
@@ -321,8 +346,7 @@ with tab2:
         'category': 'Replatform',
         'icon': '🔧',
         'subtitle': 'Tinker & Shift',
-        'count': 4,
-        'percentage': 1.15,
+        'count': 3,
         'description':
         'การย้ายแอปพลิเคชันไปยัง Cloud พร้อมกับการปรับปรุงบางส่วน เพื่อใช้ประโยชน์จากบริการจัดการของ Cloud (Managed Services)',
         'color': '#A8E4E4'
@@ -330,8 +354,7 @@ with tab2:
         'category': 'Repurchase',
         'icon': '🛒',
         'subtitle': 'ใช้ SaaS หรือ COTS แทนระบบเดิม',
-        'count': 2,
-        'percentage': 0.57,
+        'count': 5,
         'description':
         'การเลิกใช้ระบบงานเดิมและเปลี่ยนไปใช้บริการซอฟต์แวร์สำเร็จรูป หรือ บริการรูปแบบซอฟต์แวร์เป็นบริการ (SaaS) แทน',
         'color': '#F4C7B9'
@@ -340,14 +363,38 @@ with tab2:
         'icon': '🏗️',
         'subtitle': 'ปรับโครงสร้างใหม่เป็น Cloud-Native',
         'count': 1,
-        'percentage': 0.29,
         'description':
         'การออกแบบและพัฒนาปรับปรุงสถาปัตยกรรมระบบงานใหม่ ให้เป็นรูปแบบ (Cloud-Native) ',
         'color': '#D9C8F4'
     }]
 
+    # *** การคำนวณเปอร์เซ็นต์แบบพลวัตสำหรับ Phase 2 ***
+    # คำนวณ % เทียบกับ 349 (ตามที่ระบุในข้อมูลเดิม)
+    phase2_data = []
+    for item in phase2_data_raw:
+        # คำนวณเปอร์เซ็นต์ใหม่ (เทียบกับ TOTAL_APPS = 349)
+        percentage = (item['count'] / TOTAL_APPS) * 100
+        item['percentage'] = round(percentage, 2)
+        phase2_data.append(item)
+
+    # ตรวจสอบยอดรวมของ Phase 2
+    sum_phase2_counts = sum(item['count'] for item in phase2_data)
+    # คำนวณเปอร์เซ็นต์รวมของ Phase 2 (เทียบกับ 349)
+    sum_phase2_percentage = round((sum_phase2_counts / TOTAL_APPS) * 100, 2)
+
+    # หากต้องการคำนวณ % เทียบกับ 114
+    phase2_percentage_of_114 = [
+        round((item['count'] / TOTAL_APPS_PHASE2) * 100, 2)
+        for item in phase2_data
+    ]
+
+    # แสดงผล Card (ใช้ phase2_data ที่คำนวณแล้ว)
     row1_cols_p2 = st.columns(3)
     for idx, item in enumerate(phase2_data[:3]):
+        # ใช้ % ที่คำนวณเทียบกับ 349 (ตามโครงสร้างข้อมูลเดิม)
+        # หากต้องการแสดง % เทียบกับ 114 ให้ใช้ phase2_percentage_of_114[idx]
+        current_percentage_display = item['percentage']
+
         with row1_cols_p2[idx]:
             st.markdown(f"""
             <div class="category-card" style="border-left-color: {item['color']};">
@@ -356,7 +403,7 @@ with tab2:
                         <div class="card-title">{item['icon']} {item['category']}</div>
                         <div class="card-subtitle">{item['subtitle']}</div>
                     </div>
-                    <div class="card-percentage">{item['percentage']}%</div>
+                    <div class="card-percentage">{current_percentage_display:.2f}%</div>
                 </div>
                 <div class="card-number">{item['count']}</div>
                 <div class="card-description">{item['description']}</div>
@@ -366,6 +413,10 @@ with tab2:
 
     row2_cols_p2 = st.columns(3)
     for idx, item in enumerate(phase2_data[3:]):
+        # ใช้ % ที่คำนวณเทียบกับ 349 (ตามโครงสร้างข้อมูลเดิม)
+        # หากต้องการแสดง % เทียบกับ 114 ให้ใช้ phase2_percentage_of_114[idx+3]
+        current_percentage_display = item['percentage']
+
         with row2_cols_p2[idx]:
             st.markdown(f"""
             <div class="category-card" style="border-left-color: {item['color']};">
@@ -374,7 +425,7 @@ with tab2:
                         <div class="card-title">{item['icon']} {item['category']}</div>
                         <div class="card-subtitle">{item['subtitle']}</div>
                     </div>
-                    <div class="card-percentage">{item['percentage']}%</div>
+                    <div class="card-percentage">{current_percentage_display:.2f}%</div>
                 </div>
                 <div class="card-number">{item['count']}</div>
                 <div class="card-description">{item['description']}</div>
@@ -389,12 +440,14 @@ with tab2:
 
     df_phase2 = pd.DataFrame(phase2_data)
     df_phase2 = df_phase2[['category', 'count', 'percentage', 'description']]
-    df_phase2.columns = ['Category', 'จำนวน', 'เปอร์เซ็นต์', 'คำอธิบาย']
+    df_phase2.columns = [
+        'Category', 'จำนวน', 'เปอร์เซ็นต์ (จาก 349)', 'คำอธิบาย'
+    ]
 
     col_chart1_p2, col_chart2_p2 = st.columns(2)
 
     with col_chart1_p2:
-        st.markdown("#### สัดส่วนการแบ่ง Category")
+        st.markdown("#### สัดส่วนการแบ่ง Category (เทียบกับ 349 Applications)")
         colors_p2 = [item['color'] for item in phase2_data]
         fig_pie_p2 = go.Figure(data=[
             go.Pie(
@@ -404,26 +457,35 @@ with tab2:
                 textposition='auto',
                 textinfo='label+percent',
                 hovertemplate=
-                '<b>%{label}</b><br>จำนวน: %{value}<br>เปอร์เซ็นต์: %{percent}<extra></extra>'
+                '<b>%{label}</b><br>จำนวน: %{value}<br>เปอร์เซ็นต์ (จาก 349): %{percent}<extra></extra>'
             )
         ])
         fig_pie_p2.update_layout(height=400,
                                  showlegend=False,
                                  margin=dict(t=20, b=20, l=20, r=20))
         st.plotly_chart(fig_pie_p2, use_container_width=True)
+        st.markdown(f"""
+        <div style='text-align: center; font-size: 14px; color: #666;'>
+        **Note:** กราฟวงกลมนี้แสดงสัดส่วนของ Applications ใน Phase 2 เทียบกับ Applications ทั้งหมด 349 รายการ
+        </div>
+        """,
+                    unsafe_allow_html=True)
 
     with col_chart2_p2:
-        st.markdown("#### จำนวน Applications ตาม Category")
+        st.markdown(
+            f"#### จำนวน Applications ตาม Category (รวม {TOTAL_APPS_PHASE2} รายการ)"
+        )
         fig_bar_p2 = go.Figure(data=[
-            go.Bar(x=[item['category'] for item in phase2_data],
-                   y=[item['count'] for item in phase2_data],
-                   text=[
-                       f"{item['count']}<br>({item['percentage']}%)"
-                       for item in phase2_data
-                   ],
-                   textposition='outside',
-                   marker=dict(color=colors_p2),
-                   hovertemplate='<b>%{x}</b><br>จำนวน: %{y}<extra></extra>')
+            go.Bar(
+                x=[item['category'] for item in phase2_data],
+                y=[item['count'] for item in phase2_data],
+                text=[
+                    f"{item['count']}<br>({percent_of_114:.2f}%)"  # ใช้ % เทียบกับ 114 สำหรับ Bar Chart
+                    for percent_of_114 in phase2_percentage_of_114
+                ],
+                textposition='outside',
+                marker=dict(color=colors_p2),
+                hovertemplate='<b>%{x}</b><br>จำนวน: %{y}<extra></extra>')
         ])
         fig_bar_p2.update_layout(height=400,
                                  xaxis_title="",
@@ -431,13 +493,31 @@ with tab2:
                                  showlegend=False,
                                  margin=dict(t=20, b=20, l=20, r=20))
         st.plotly_chart(fig_bar_p2, use_container_width=True)
+        st.markdown(f"""
+        <div style='text-align: center; font-size: 14px; color: #666;'>
+        **Note:** ตัวเลขเปอร์เซ็นต์ด้านบนแท่งกราฟแสดงสัดส่วนของแต่ละ Category เทียบกับ **{TOTAL_APPS_PHASE2}** รายการใน Phase 2
+        </div>
+        """,
+                    unsafe_allow_html=True)
 
     st.divider()
     st.markdown("#### 📋 ตารางสรุปข้อมูล Phase 2")
+
+    # สร้างคอลัมน์ % จาก 114 เพื่อให้ข้อมูลในตารางครบถ้วน
     df_display_p2 = df_phase2.copy()
-    df_display_p2['เปอร์เซ็นต์'] = [
-        f"{x}%" for x in df_display_p2['เปอร์เซ็นต์']
+    df_display_p2['เปอร์เซ็นต์ (จาก 114)'] = [
+        f"{x:.2f}%" for x in phase2_percentage_of_114
     ]
+    df_display_p2['เปอร์เซ็นต์ (จาก 349)'] = [
+        f"{x:.2f}%" for x in df_display_p2['เปอร์เซ็นต์ (จาก 349)']
+    ]
+
+    # จัดเรียงคอลัมน์ใหม่
+    df_display_p2 = df_display_p2[[
+        'Category', 'จำนวน', 'เปอร์เซ็นต์ (จาก 114)', 'เปอร์เซ็นต์ (จาก 349)',
+        'คำอธิบาย'
+    ]]
+
     st.dataframe(df_display_p2,
                  use_container_width=True,
                  hide_index=True,
@@ -446,17 +526,26 @@ with tab2:
                      st.column_config.TextColumn("Category", width="small"),
                      "จำนวน":
                      st.column_config.NumberColumn("จำนวน", width="small"),
-                     "เปอร์เซ็นต์":
+                     "เปอร์เซ็นต์ (จาก 114)":
+                     st.column_config.TextColumn("เปอร์เซ็นต์ (จาก 114)",
+                                                 width="small"),
+                     "เปอร์เซ็นต์ (จาก 349)":
                      st.column_config.TextColumn("เปอร์เซ็นต์ (จาก 349)",
                                                  width="small"),
                      "คำอธิบาย":
                      st.column_config.TextColumn("คำอธิบาย", width="large")
                  })
 
-    st.markdown("""
+    # แก้ไขข้อสรุปให้สอดคล้องกับยอดรวมที่คำนวณได้
+    st.info(
+        f"**รวมทั้งหมด Phase 2: {sum_phase2_counts} Applications ({sum_phase2_percentage:.2f}% ของ 349 Applications)**"
+    )
+
+    st.markdown(f"""
     ### 📌 สรุปข้อมูล Phase 2
-    - **Refactor (15.47%)** เป็น Category ที่มีจำนวนมากที่สุดใน Phase 2 โดยมี 54 Applications
-    - **Retire (10.89%)** เป็น Category ที่มีจำนวนมากเป็นอันดับสอง โดยมี 38 Applications
-    - **Rehost (4.30%)** มี 15 Applications
-    - **Re-architect (0.29%)** มีจำนวนน้อยที่สุด โดยมีเพียง 1 Application
+    - **รวม Application ใน Phase 2 ทั้งหมด:** **{TOTAL_APPS_PHASE2}** รายการ
+    - **Refactor ({phase2_percentage_of_114[0]:.2f}%)** เป็น Category ที่มีจำนวนมากที่สุดใน Phase 2 โดยมี **{phase2_data[0]['count']}** Applications
+    - **Retire ({phase2_percentage_of_114[1]:.2f}%)** เป็น Category ที่มีจำนวนมากเป็นอันดับสอง โดยมี **{phase2_data[1]['count']}** Applications
+    - **Rehost ({phase2_percentage_of_114[2]:.2f}%)** มี **{phase2_data[2]['count']}** Applications
+    - **Re-architect ({phase2_percentage_of_114[5]:.2f}%)** มีจำนวนน้อยที่สุด โดยมีเพียง **{phase2_data[5]['count']}** Application
     """)
